@@ -1,4 +1,4 @@
-module github.com/vicanso/cod-fressh
+module github.com/vicanso/cod-fresh
 
 require (
 	github.com/vicanso/cod v0.0.1
