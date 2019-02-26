@@ -17,8 +17,8 @@ import (
 func main() {
 
 	d := cod.New()
-	d.Use(etag.NewDefault())
 	d.Use(fresh.NewDefault())
+	d.Use(etag.NewDefault())
 
 	d.GET("/", func(c *cod.Context) (err error) {
 		c.BodyBuffer = bytes.NewBufferString("abcd")
@@ -27,5 +27,4 @@ func main() {
 
 	d.ListenAndServe(":7001")
 }
-
 ```
