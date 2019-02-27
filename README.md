@@ -1,5 +1,7 @@
 # cod-fresh
 
+[![Build Status](https://img.shields.io/travis/vicanso/cod-fresh.svg?label=linux+build)](https://travis-ci.org/vicanso/cod-fresh)
+
 HTTP response freshness testing middleware for cod.
 
 ```go
