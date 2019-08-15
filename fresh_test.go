@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/vicanso/cod"
+	"github.com/vicanso/elton"
 )
 
 func TestFresh(t *testing.T) {
@@ -18,14 +18,14 @@ func TestFresh(t *testing.T) {
 	modifiedAt := "Tue, 25 Dec 2018 00:02:22 GMT"
 	t.Run("skip", func(t *testing.T) {
 		assert := assert.New(t)
-		c := cod.NewContext(nil, nil)
+		c := elton.NewContext(nil, nil)
 		done := false
 		c.Next = func() error {
 			done = true
 			return nil
 		}
 		fn := New(Config{
-			Skipper: func(c *cod.Context) bool {
+			Skipper: func(c *elton.Context) bool {
 				return true
 			},
 		})
@@ -36,7 +36,7 @@ func TestFresh(t *testing.T) {
 
 	t.Run("return error", func(t *testing.T) {
 		assert := assert.New(t)
-		c := cod.NewContext(nil, nil)
+		c := elton.NewContext(nil, nil)
 		customErr := errors.New("abccd")
 		c.Next = func() error {
 			return customErr
@@ -49,11 +49,11 @@ func TestFresh(t *testing.T) {
 	t.Run("not modified", func(t *testing.T) {
 		assert := assert.New(t)
 		req := httptest.NewRequest("GET", "/users/me", nil)
-		req.Header.Set(cod.HeaderIfModifiedSince, modifiedAt)
+		req.Header.Set(elton.HeaderIfModifiedSince, modifiedAt)
 		resp := httptest.NewRecorder()
-		resp.Header().Set(cod.HeaderLastModified, modifiedAt)
+		resp.Header().Set(elton.HeaderLastModified, modifiedAt)
 
-		c := cod.NewContext(resp, req)
+		c := elton.NewContext(resp, req)
 		done := false
 		c.Next = func() error {
 			done = true
@@ -75,10 +75,10 @@ func TestFresh(t *testing.T) {
 	t.Run("no body", func(t *testing.T) {
 		assert := assert.New(t)
 		req := httptest.NewRequest("GET", "/users/me", nil)
-		req.Header.Set(cod.HeaderIfModifiedSince, modifiedAt)
+		req.Header.Set(elton.HeaderIfModifiedSince, modifiedAt)
 		resp := httptest.NewRecorder()
-		resp.Header().Set(cod.HeaderLastModified, modifiedAt)
-		c := cod.NewContext(resp, req)
+		resp.Header().Set(elton.HeaderLastModified, modifiedAt)
+		c := elton.NewContext(resp, req)
 		c.Next = func() error {
 			return nil
 		}
@@ -91,11 +91,11 @@ func TestFresh(t *testing.T) {
 	t.Run("post method", func(t *testing.T) {
 		assert := assert.New(t)
 		req := httptest.NewRequest("POST", "/users/me", nil)
-		req.Header.Set(cod.HeaderIfModifiedSince, modifiedAt)
+		req.Header.Set(elton.HeaderIfModifiedSince, modifiedAt)
 		resp := httptest.NewRecorder()
-		resp.Header().Set(cod.HeaderLastModified, modifiedAt)
+		resp.Header().Set(elton.HeaderLastModified, modifiedAt)
 
-		c := cod.NewContext(resp, req)
+		c := elton.NewContext(resp, req)
 		done := false
 		c.Next = func() error {
 			done = true
@@ -118,11 +118,11 @@ func TestFresh(t *testing.T) {
 	t.Run("error response", func(t *testing.T) {
 		assert := assert.New(t)
 		req := httptest.NewRequest("GET", "/users/me", nil)
-		req.Header.Set(cod.HeaderIfModifiedSince, modifiedAt)
+		req.Header.Set(elton.HeaderIfModifiedSince, modifiedAt)
 		resp := httptest.NewRecorder()
-		resp.Header().Set(cod.HeaderLastModified, modifiedAt)
+		resp.Header().Set(elton.HeaderLastModified, modifiedAt)
 
-		c := cod.NewContext(resp, req)
+		c := elton.NewContext(resp, req)
 		done := false
 		c.Next = func() error {
 			done = true

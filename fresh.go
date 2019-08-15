@@ -17,29 +17,29 @@ package fresh
 import (
 	"net/http"
 
-	"github.com/vicanso/cod"
+	"github.com/vicanso/elton"
 	"github.com/vicanso/fresh"
 )
 
 type (
 	// Config fresh config
 	Config struct {
-		Skipper cod.Skipper
+		Skipper elton.Skipper
 	}
 )
 
 // NewDefault create a default ETag middleware
-func NewDefault() cod.Handler {
+func NewDefault() elton.Handler {
 	return New(Config{})
 }
 
 // New create a fresh checker
-func New(config Config) cod.Handler {
+func New(config Config) elton.Handler {
 	skipper := config.Skipper
 	if skipper == nil {
-		skipper = cod.DefaultSkipper
+		skipper = elton.DefaultSkipper
 	}
-	return func(c *cod.Context) (err error) {
+	return func(c *elton.Context) (err error) {
 		if skipper(c) {
 			return c.Next()
 		}
