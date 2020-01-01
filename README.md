@@ -18,15 +18,18 @@ import (
 
 func main() {
 
-	d := elton.New()
-	d.Use(fresh.NewDefault())
-	d.Use(etag.NewDefault())
+	e := elton.New()
+	e.Use(fresh.NewDefault())
+	e.Use(etag.NewDefault())
 
-	d.GET("/", func(c *elton.Context) (err error) {
+	e.GET("/", func(c *elton.Context) (err error) {
 		c.BodyBuffer = bytes.NewBufferString("abcd")
 		return
 	})
 
-	d.ListenAndServe(":3000")
+	err := e.ListenAndServe(":3000")
+	if err != nil {
+		panic(err)
+	}
 }
 ```
