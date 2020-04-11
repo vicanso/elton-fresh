@@ -1,5 +1,7 @@
 # elton-fresh
 
+The middleware has been archived, please use the middleware of [elton](https://github.com/vicanso/elton).
+
 [![Build Status](https://img.shields.io/travis/vicanso/elton-fresh.svg?label=linux+build)](https://travis-ci.org/vicanso/elton-fresh)
 
 HTTP response freshness testing middleware for elton.
